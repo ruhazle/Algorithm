@@ -24,37 +24,16 @@ public class Main {
             graph[end].add(start);
         }
 
-        Queue<qItem> Q = new LinkedList<>();
-        Q.add(new qItem(1, 1));
-        visited[1] = true;
-
-        while(!Q.isEmpty()){
-            qItem now = Q.poll();
-
-            if(now.depth == 2 || now.depth == 3) {
-                answer.add(now.node);
-            }
-
-            for(int i = 0; i < graph[now.node].size(); i++){
-                int next = graph[now.node].get(i);
-                if(!visited[next]) {
-                    Q.add(new qItem(next, now.depth+1));
-                    visited[next] = true;
-                }
+        Set<Integer> friends = new HashSet<>();
+        for(int i = 0; i < graph[1].size(); i++){
+            int node = graph[1].get(i);
+            friends.add(node);
+            for(int j = 0; j < graph[node].size(); j++) {
+                friends.add(graph[node].get(j));
             }
         }
 
-        System.out.println(answer.size());
-
-    }
-}
-
-class qItem {
-    int node;
-    int depth;
-
-    qItem(int node, int depth) {
-        this.node = node;
-        this.depth = depth;
+        friends.remove(1);
+        System.out.println(friends.size());
     }
 }
